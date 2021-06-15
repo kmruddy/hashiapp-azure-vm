@@ -31,18 +31,18 @@ data "azurerm_resource_group" "demo_rg" {
 
 data "azurerm_network_interface" "happ_nic" {
   name                = "${data.terraform_remote_state.haarg.outputs.prefix}-happ-nic"
-  resource_group_name = data.azurerm_resource_group.myresourcegroup.name
+  resource_group_name = data.azurerm_resource_group.demo_rg.name
 }
 
 data "azurerm_public_ip" "happ_pip" {
   name                = "${data.terraform_remote_state.haarg.outputs.prefix}-ip"
-  resource_group_name = data.azurerm_resource_group.myresourcegroup.name
+  resource_group_name = data.azurerm_resource_group.demo_rg.name
 }
 
 resource "azurerm_virtual_machine" "happ_vm" {
   name                = "${data.terraform_remote_state.haarg.outputs.prefix}-demo-app"
-  location            = data.azurerm_resource_group.myresourcegroup.location
-  resource_group_name = data.azurerm_resource_group.myresourcegroup.name
+  location            = data.azurerm_resource_group.demo_rg.location
+  resource_group_name = data.azurerm_resource_group.demo_rg.name
   vm_size             = var.vm_size
 
   network_interface_ids         = [data.azurerm_network_interface.happ_nic.id]
