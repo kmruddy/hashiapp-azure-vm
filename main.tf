@@ -40,7 +40,7 @@ data "azurerm_public_ip" "happ_pip" {
 }
 
 resource "azurerm_virtual_machine" "happ_vm" {
-  name                = "${data.terraform_remote_state.haarg.outputs.prefix}-meow"
+  name                = "${data.terraform_remote_state.haarg.outputs.prefix}-demo-app"
   location            = data.azurerm_resource_group.myresourcegroup.location
   resource_group_name = data.azurerm_resource_group.myresourcegroup.name
   vm_size             = var.vm_size
@@ -73,7 +73,7 @@ resource "azurerm_virtual_machine" "happ_vm" {
   }
 }
 
-resource "null_resource" "configure_cat_app" {
+resource "null_resource" "configure_happ" {
   depends_on = [
     azurerm_virtual_machine.happ_vm,
   ]
